@@ -3,32 +3,40 @@ import { ref } from 'vue'
 import { useMenuStore } from '../../stores/menu'
 import { useI18n } from 'vue-i18n'
 import SettingsDialog from '../settings/SettingsDialog.vue'
+import type { MenuItem } from '../../types/menu'
 
 const { t } = useI18n()
 const menuStore = useMenuStore()
 const showSettings = ref(false)
 
-const openSettings = () => {
-  showSettings.value = true
+const handleMenuClick = (item: MenuItem) => {
+  menuStore.setActiveMainMenu(item.id)
 }
 </script>
 
 <template>
   <nav class="main-sidebar">
     <div class="menu-items">
-      <div v-for="item in menuStore.mainMenuItems" 
-           :key="item.id" 
-           :class="['menu-item', { active: menuStore.activeMainMenu === item.id }]"
-           @click="menuStore.setActiveMainMenu(item.id)">
-        <span class="icon">{{ item.icon }}</span>
+      <button
+        v-for="item in menuStore.mainMenuItems" 
+        :key="item.id" 
+        :class="['menu-item', { active: menuStore.activeMainMenu === item.id }]"
+        :title="t(`menu.${item.id}`)"
+        @click="handleMenuClick(item)"
+      >
+        <span class="icon" aria-hidden="true">{{ item.icon }}</span>
         <span class="text">{{ t(`menu.${item.id}`) }}</span>
-      </div>
+      </button>
     </div>
     <div class="settings-container">
-      <div class="menu-item" @click="openSettings">
-        <span class="icon">⚙️</span>
+      <button 
+        class="menu-item" 
+        :title="t('general.settings')"
+        @click="showSettings = true"
+      >
+        <span class="icon" aria-hidden="true">⚙️</span>
         <span class="text">{{ t('general.settings') }}</span>
-      </div>
+      </button>
     </div>
     <SettingsDialog v-model="showSettings" />
   </nav>
@@ -37,6 +45,7 @@ const openSettings = () => {
 <style scoped>
 .main-sidebar {
   width: var(--main-sidebar-width);
+  min-width: var(--main-sidebar-width);
   background-color: var(--primary-bg);
   border-right: 1px solid var(--border-color);
   padding: 20px 0;
@@ -44,6 +53,7 @@ const openSettings = () => {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  flex-shrink: 0;
 }
 
 .menu-items {
@@ -55,11 +65,17 @@ const openSettings = () => {
 .menu-item {
   display: flex;
   align-items: center;
+  width: 100%;
   padding: 10px 16px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s ease;
   border-radius: 6px;
   margin: 0 8px;
+  background: none;
+  border: none;
+  color: inherit;
+  text-align: left;
+  font: inherit;
 }
 
 .menu-item:hover {
@@ -72,6 +88,13 @@ const openSettings = () => {
 
 .menu-item .icon {
   margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.menu-item .text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .settings-container {

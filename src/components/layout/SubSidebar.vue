@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useMenuStore } from '../../stores/menu'
 import { useChatStore } from '../../stores/chat'
 import { useI18n } from 'vue-i18n'
@@ -8,51 +9,63 @@ const menuStore = useMenuStore()
 const chatStore = useChatStore()
 const { t } = useI18n()
 
-const getActiveMenuTitle = () => {
+const activeMenuTitle = computed(() => {
   const activeItem = menuStore.mainMenuItems.find((item: MenuItem) => item.id === menuStore.activeMainMenu)
   return activeItem ? t(`menu.${activeItem.id}`) : ''
-}
+})
 
-const handleChatSelect = (chatId: string) => {
-  chatStore.setActiveChat(chatId)
-}
+const isChat = computed(() => menuStore.activeMainMenu === 'chat')
 </script>
 
 <template>
-  <div class="sub-sidebar">
-    <div class="sub-header">
-      <h2>{{ getActiveMenuTitle() }}</h2>
-      <button class="add-button">+</button>
-    </div>
+  <aside class="sub-sidebar">
+    <header class="sub-header">
+      <h2>{{ activeMenuTitle }}</h2>
+      <button class="add-button" :title="t('actions.add')">
+        <span aria-hidden="true">+</span>
+      </button>
+    </header>
     <div class="sub-menu-items">
-      <template v-if="menuStore.activeMainMenu === 'chat'">
-        <div v-for="chat in chatStore.chats" 
-             :key="chat.id" 
-             :class="['sub-menu-item', { active: chat.id === chatStore.activeChatId }]"
-             @click="handleChatSelect(chat.id)">
+      <template v-if="isChat">
+        <button
+          v-for="chat in chatStore.chats" 
+          :key="chat.id" 
+          :class="['sub-menu-item', { active: chat.id === chatStore.activeChatId }]"
+          @click="chatStore.setActiveChat(chat.id)"
+        >
           <div class="title">{{ chat.title }}</div>
-          <div class="time">{{ chat.time }}</div>
-        </div>
+          <time class="time">{{ chat.time }}</time>
+        </button>
       </template>
       <template v-else>
-        <div v-for="(item, index) in menuStore.subMenuItems[menuStore.activeMainMenu]" 
-             :key="index" 
-             class="sub-menu-item">
+        <button
+          v-for="(item, index) in menuStore.subMenuItems[menuStore.activeMainMenu]" 
+          :key="index" 
+          class="sub-menu-item"
+        >
           <div class="title">{{ item.title }}</div>
-          <div class="description">{{ item.description }}</div>
-        </div>
+          <template v-if="'description' in item">
+            <div class="description">{{ item.description }}</div>
+          </template>
+          <template v-else>
+            <div class="time">{{ item.time }}</div>
+          </template>
+        </button>
       </template>
     </div>
-  </div>
+  </aside>
 </template>
 
 <style scoped>
 .sub-sidebar {
   width: var(--sub-sidebar-width);
+  min-width: var(--sub-sidebar-width);
   background-color: var(--secondary-bg);
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
+  height: 100%;
 }
 
 .sub-header {
@@ -66,6 +79,10 @@ const handleChatSelect = (chatId: string) => {
 .sub-header h2 {
   font-size: 1.2rem;
   font-weight: 500;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .add-button {
@@ -80,6 +97,9 @@ const handleChatSelect = (chatId: string) => {
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-left: 12px;
 }
 
 .add-button:hover {
@@ -89,13 +109,21 @@ const handleChatSelect = (chatId: string) => {
 .sub-menu-items {
   padding: 12px;
   overflow-y: auto;
+  flex: 1;
 }
 
 .sub-menu-item {
+  width: 100%;
   padding: 12px;
   border-radius: 6px;
   cursor: pointer;
   margin-bottom: 8px;
+  background: none;
+  border: none;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  transition: all 0.2s ease;
 }
 
 .sub-menu-item:hover {
@@ -109,11 +137,17 @@ const handleChatSelect = (chatId: string) => {
 .sub-menu-item .title {
   font-weight: 500;
   margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .sub-menu-item .time,
 .sub-menu-item .description {
   font-size: 0.9rem;
   opacity: 0.7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style> 

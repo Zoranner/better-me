@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import MarkdownRenderer from './MarkdownRenderer.vue'
+
 interface Props {
   content: string
   timestamp?: string
@@ -14,7 +16,9 @@ defineProps<Props>()
   <div class="message-container" :class="{ 'user-message': isUser }">
     <div class="avatar" :class="{ 'user-avatar': isUser }"></div>
     <div class="message-content">
-      <div class="message-text">{{ content }}</div>
+      <div class="message-text">
+        <MarkdownRenderer :content="content" />
+      </div>
       <div class="message-info">
         <div class="message-actions">
           <button class="action-btn">
@@ -50,6 +54,7 @@ defineProps<Props>()
   height: 40px;
   border-radius: 50%;
   background: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+  flex-shrink: 0;
 }
 
 .user-avatar {
@@ -61,6 +66,7 @@ defineProps<Props>()
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 0; /* 防止flex子元素溢出 */
 }
 
 .message-text {

@@ -1,21 +1,24 @@
 <script setup lang="ts">
 import { ref, nextTick } from 'vue'
 import { useChatStore } from '../../stores/chat'
+import MarkdownRenderer from './MarkdownRenderer.vue'
 
 const chatStore = useChatStore()
 const message = ref('')
 const textareaRef = ref<HTMLTextAreaElement>()
+const showPreview = ref(false)
 
 const handleSubmit = () => {
   if (!message.value.trim()) return
   
-  chatStore.sendMessage(message.value.trim())
+  chatStore.sendMessage(message.value)
   message.value = ''
   
   // 重置输入框高度
   if (textareaRef.value) {
     textareaRef.value.style.height = '80px'
   }
+  showPreview.value = false
 }
 
 const handleKeydown = (e: KeyboardEvent) => {
@@ -40,20 +43,36 @@ const adjustHeight = () => {
 const handleInput = () => {
   nextTick(adjustHeight)
 }
+
+const togglePreview = () => {
+  showPreview.value = !showPreview.value
+}
 </script>
 
 <template>
   <div class="chat-input-container">
     <div class="input-wrapper">
+      <div v-if="showPreview" class="preview-area">
+        <MarkdownRenderer :content="message" />
+      </div>
       <textarea
+        v-else
         ref="textareaRef"
         v-model="message"
         class="message-input"
-        placeholder="输入消息，Enter 发送，Shift + Enter 换行"
+        placeholder="输入消息，Enter 发送，Shift + Enter 换行，支持 Markdown 语法"
         @keydown="handleKeydown"
         @input="handleInput"
       />
       <div class="button-container">
+        <button 
+          class="preview-button"
+          :class="{ active: showPreview }"
+          :title="showPreview ? '编辑' : '预览'"
+          @click="togglePreview"
+        >
+          <span aria-hidden="true">{{ showPreview ? '✏️' : '👁️' }}</span>
+        </button>
         <button 
           class="send-button"
           :disabled="!message.trim()"
@@ -98,10 +117,42 @@ const handleInput = () => {
   color: #71717a;
 }
 
+.preview-area {
+  flex: 1;
+  height: 80px;
+  overflow-y: auto;
+  padding: 0;
+}
+
 .button-container {
   display: flex;
   align-items: flex-end;
+  gap: 8px;
   padding-bottom: 4px;
+}
+
+.preview-button {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: #71717a;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.preview-button:hover {
+  color: #e4e4e7;
+  background-color: #3f3f46;
+}
+
+.preview-button.active {
+  color: #e4e4e7;
+  background-color: #3f3f46;
 }
 
 .send-button {
