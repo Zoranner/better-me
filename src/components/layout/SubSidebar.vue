@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import { useMenuStore } from '../../stores/menu'
+import { useChatStore } from '../../stores/chat'
 import { useI18n } from 'vue-i18n'
 import type { MenuItem } from '../../types/menu'
 
 const menuStore = useMenuStore()
+const chatStore = useChatStore()
 const { t } = useI18n()
 
 const getActiveMenuTitle = () => {
   const activeItem = menuStore.mainMenuItems.find((item: MenuItem) => item.id === menuStore.activeMainMenu)
   return activeItem ? t(`menu.${activeItem.id}`) : ''
+}
+
+const handleChatSelect = (chatId: string) => {
+  chatStore.setActiveChat(chatId)
 }
 </script>
 
@@ -20,11 +26,12 @@ const getActiveMenuTitle = () => {
     </div>
     <div class="sub-menu-items">
       <template v-if="menuStore.activeMainMenu === 'chat'">
-        <div v-for="(item, index) in menuStore.subMenuItems.chat" 
-             :key="index" 
-             class="sub-menu-item">
-          <div class="title">{{ item.title }}</div>
-          <div class="time">{{ item.time }}</div>
+        <div v-for="chat in chatStore.chats" 
+             :key="chat.id" 
+             :class="['sub-menu-item', { active: chat.id === chatStore.activeChatId }]"
+             @click="handleChatSelect(chat.id)">
+          <div class="title">{{ chat.title }}</div>
+          <div class="time">{{ chat.time }}</div>
         </div>
       </template>
       <template v-else>
@@ -92,6 +99,10 @@ const getActiveMenuTitle = () => {
 }
 
 .sub-menu-item:hover {
+  background-color: var(--hover-bg);
+}
+
+.sub-menu-item.active {
   background-color: var(--hover-bg);
 }
 
