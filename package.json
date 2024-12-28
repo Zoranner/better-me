@@ -1,9 +1,9 @@
 {
-  "name": "electron-vue-vite",
-  "version": "28.1.0",
+  "name": "better-llm",
+  "version": "0.0.1",
   "main": "dist-electron/main/index.js",
-  "description": "Really simple Electron + Vue + Vite boilerplate.",
-  "author": "草鞋没号 <308487730@qq.com>",
+  "description": "A better LLM tool",
+  "author": "Zoranner",
   "license": "MIT",
   "private": true,
   "keywords": [
@@ -22,17 +22,28 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build && electron-builder",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier --write \"src/**/*.{ts,tsx,vue,js,jsx,json,css,scss,md}\""
   },
   "devDependencies": {
+    "@types/node": "latest",
     "@vitejs/plugin-vue": "^5.0.4",
+    "@vue/runtime-core": "latest",
+    "@vue/runtime-dom": "latest",
     "electron": "^29.1.1",
     "electron-builder": "^24.13.3",
+    "sass": "^1.83.0",
+    "sass-embedded": "^1.83.0",
     "typescript": "^5.4.2",
     "vite": "^5.1.5",
     "vite-plugin-electron": "^0.28.4",
     "vite-plugin-electron-renderer": "^0.14.5",
-    "vue": "^3.4.21",
     "vue-tsc": "^2.0.6"
+  },
+  "dependencies": {
+    "flyonui": "^1.2.0",
+    "pinia": "^2.3.0",
+    "prettier": "^3.4.2",
+    "vue": "^3.4.21"
   }
 }

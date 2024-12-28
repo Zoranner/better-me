@@ -46,6 +46,12 @@ async function createWindow() {
   win = new BrowserWindow({
     title: 'Main window',
     icon: path.join(process.env.VITE_PUBLIC, 'favicon.ico'),
+    show: false,
+    width: 1200,
+    height: 800,
+    minWidth: 800,
+    minHeight: 600,
+    autoHideMenuBar: true,
     webPreferences: {
       preload,
       // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -57,13 +63,21 @@ async function createWindow() {
     },
   })
 
+  // 最大化窗口
+  win.maximize()
+
   if (VITE_DEV_SERVER_URL) { // #298
     win.loadURL(VITE_DEV_SERVER_URL)
     // Open devTool if the app is not packaged
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
   } else {
     win.loadFile(indexHtml)
   }
+
+  // 当窗口准备好时显示
+  win.once('ready-to-show', () => {
+    win?.show()
+  })
 
   // Test actively push message to the Electron-Renderer
   win.webContents.on('did-finish-load', () => {
