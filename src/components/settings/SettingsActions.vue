@@ -89,35 +89,62 @@ const onFileSelected = async (event: Event) => {
 <style scoped>
 .settings-actions {
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  border-top: 1px solid var(--border-color);
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+  border-top: 1px solid var(--color-border);
+  background-color: var(--color-background-alt);
 }
 
 .action-btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  gap: var(--spacing-2);
+  padding: var(--spacing-2) var(--spacing-4);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  background: var(--button-background);
-  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-normal) var(--transition-timing);
+  background-color: var(--color-secondary);
+  color: var(--color-background);
 }
 
 .action-btn:hover {
-  background: var(--button-hover-background);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.action-icon {
+  font-size: var(--font-size-lg);
 }
 
 .import-btn {
-  background: var(--primary-color);
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+.import-btn:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.export-btn {
+  background-color: var(--color-secondary);
+  color: var(--color-background);
+}
+
+.export-btn:hover {
+  background-color: var(--color-secondary-dark);
 }
 
 .reset-btn {
   margin-left: auto;
-  background: var(--danger-color);
-  color: white;
+  background-color: var(--color-error);
+  color: var(--color-background);
+}
+
+.reset-btn:hover {
+  background-color: var(--color-error);
+  opacity: 0.9;
 }
 </style> 

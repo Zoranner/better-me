@@ -33,6 +33,7 @@ const handleChange = (event: Event) => {
   display: inline-block;
   width: 44px;
   height: 24px;
+  cursor: pointer;
 }
 
 .toggle input {
@@ -48,9 +49,9 @@ const handleChange = (event: Event) => {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--border-color);
-  transition: 0.3s;
-  border-radius: 24px;
+  background-color: var(--color-border);
+  transition: all var(--transition-normal) var(--transition-timing);
+  border-radius: var(--radius-full);
 }
 
 .toggle-slider:before {
@@ -60,17 +61,31 @@ const handleChange = (event: Event) => {
   width: 18px;
   left: 3px;
   bottom: 3px;
-  background-color: white;
-  transition: 0.3s;
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: var(--color-background);
+  transition: all var(--transition-normal) var(--transition-timing);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-sm);
 }
 
 input:checked + .toggle-slider {
-  background-color: var(--primary-color);
+  background-color: var(--color-primary);
 }
 
 input:checked + .toggle-slider:before {
   transform: translateX(20px);
+}
+
+/* 悬浮效果 */
+.toggle:hover .toggle-slider {
+  background-color: var(--color-border-dark);
+}
+
+.toggle:hover input:checked + .toggle-slider {
+  background-color: var(--color-primary-dark);
+}
+
+/* 焦点效果 */
+input:focus + .toggle-slider {
+  box-shadow: 0 0 0 2px var(--color-primary-light);
 }
 </style> 

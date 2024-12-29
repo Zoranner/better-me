@@ -1,5 +1,5 @@
 <template>
-  <div class="list-container">
+  <div class="w-80 h-full flex flex-col bg-base-100 border-r border-base-200">
     <ChatList
       v-if="type === 'chat'"
       :items="chatList"
@@ -93,11 +93,4 @@ const handleNew = () => {
   menuStore.setActiveSubMenu(id)
   console.log('Set active sub menu to:', id)
 }
-</script>
-
-<style scoped>
-.list-container {
-  width: 240px;
-  border-right: 1px solid rgba(255, 255, 255, 0.1);
-}
-</style> 
+</script> 

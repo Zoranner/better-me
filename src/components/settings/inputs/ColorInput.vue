@@ -52,7 +52,7 @@ const handleTextChange = (event: Event) => {
 <style scoped>
 .color-input {
   display: flex;
-  gap: 0.5rem;
+  gap: var(--spacing-2);
   align-items: center;
 }
 
@@ -60,10 +60,22 @@ input[type="color"] {
   width: 44px;
   height: 24px;
   padding: 0;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   cursor: pointer;
   background: none;
+  transition: all var(--transition-fast) var(--transition-timing);
+}
+
+input[type="color"]:hover {
+  border-color: var(--color-border-dark);
+  transform: scale(1.05);
+}
+
+input[type="color"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-light);
 }
 
 input[type="color"]::-webkit-color-swatch-wrapper {
@@ -72,23 +84,29 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
 input[type="color"]::-webkit-color-swatch {
   border: none;
-  border-radius: 2px;
+  border-radius: calc(var(--radius-sm) - 1px);
 }
 
 .color-text {
   flex: 1;
-  padding: 0.25rem 0.5rem;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  background: var(--input-background);
-  color: var(--text-primary);
-  font-family: monospace;
+  padding: var(--spacing-1) var(--spacing-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
   text-transform: uppercase;
+  transition: all var(--transition-fast) var(--transition-timing);
+}
+
+.color-text:hover {
+  border-color: var(--color-border-dark);
 }
 
 .color-text:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px var(--primary-color-alpha);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-light);
 }
 </style> 

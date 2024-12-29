@@ -56,18 +56,31 @@ const handleUpdate = (key: string, value: any) => {
 
 <style scoped>
 .setting-item {
-  margin-bottom: 1rem;
-  padding: 0.5rem;
+  margin-bottom: var(--spacing-4);
+  padding: var(--spacing-2);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-normal) var(--transition-timing);
+}
+
+.setting-item:hover {
+  background-color: var(--color-background-alt);
 }
 
 .setting-label {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-2);
+}
+
+.setting-label label {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
 }
 
 .setting-desc {
   display: block;
-  font-size: 0.9em;
-  color: var(--text-secondary);
-  margin-top: 0.25rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  margin-top: var(--spacing-1);
+  line-height: 1.4;
 }
 </style> 

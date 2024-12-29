@@ -59,11 +59,23 @@ const handleChange = (event: Event) => {
 <style scoped>
 .setting-input input {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  background: var(--input-background);
-  color: var(--text-primary);
+  padding: var(--spacing-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-fast) var(--transition-timing);
+}
+
+.setting-input input:hover {
+  border-color: var(--color-border-dark);
+}
+
+.setting-input input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-light);
 }
 
 .password-input {
@@ -73,15 +85,24 @@ const handleChange = (event: Event) => {
 }
 
 .password-input input {
-  padding-right: 2.5rem;
+  padding-right: var(--spacing-10);
 }
 
 .password-toggle {
   position: absolute;
-  right: 0.5rem;
+  right: var(--spacing-2);
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.25rem;
+  padding: var(--spacing-1);
+  color: var(--color-text-light);
+  font-size: var(--font-size-lg);
+  transition: all var(--transition-fast) var(--transition-timing);
+  border-radius: var(--radius-sm);
+}
+
+.password-toggle:hover {
+  background-color: var(--color-secondary-dark);
+  color: var(--color-text);
 }
 </style> 

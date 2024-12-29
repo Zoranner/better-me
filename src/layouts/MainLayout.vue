@@ -1,5 +1,5 @@
 <template>
-  <div class="main-layout">
+  <div class="flex h-screen overflow-hidden">
     <MenuBar
       :active-menu="activeMainMenu"
       @change="setActiveMainMenu"
@@ -15,6 +15,7 @@
     <ContentContainer
       :type="activeMainMenu"
       :active-id="activeSubMenuId"
+      class="flex-1"
     />
   </div>
 </template>
@@ -45,14 +46,4 @@ const setActiveSubMenu = (id: string) => {
 defineEmits<{
   (e: 'openSettings'): void
 }>()
-</script>
-
-<style scoped>
-.main-layout {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  background-color: #1a1a1a;
-  color: #ffffff;
-}
-</style> 
+</script> 

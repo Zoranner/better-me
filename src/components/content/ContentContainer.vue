@@ -1,6 +1,12 @@
 <template>
-  <div class="content-container">
-    <Transition name="fade" mode="out-in">
+  <div class="flex-1 overflow-hidden bg-base-100 relative">
+    <Transition 
+      enter-active-class="transition-opacity duration-150"
+      leave-active-class="transition-opacity duration-150"
+      enter-from-class="opacity-0"
+      leave-to-class="opacity-0"
+      mode="out-in"
+    >
       <component 
         :is="currentContent"
         :key="type + activeId"
@@ -42,21 +48,4 @@ const currentContent = computed(() => {
       return null
   }
 })
-</script>
-
-<style scoped>
-.content-container {
-  flex: 1;
-  overflow: hidden;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.15s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style> 
+</script> 
