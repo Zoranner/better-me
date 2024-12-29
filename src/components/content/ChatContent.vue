@@ -2,37 +2,44 @@
   <div class="h-full flex flex-col bg-base-100">
     <ContentHeader :title="currentChat?.title || ''">
       <template #actions>
-        <button class="btn btn-ghost btn-square btn-sm" @click="handleRename">
-          <span class="text-lg">✏️</span>
+        <button class="btn btn-ghost btn-sm gap-2">
+          <span>📝</span>
+          重命名
         </button>
-        <button class="btn btn-ghost btn-square btn-sm" @click="handleDelete">
-          <span class="text-lg">🗑️</span>
+        <button class="btn btn-ghost btn-sm gap-2">
+          <span>🗑️</span>
+          删除
         </button>
       </template>
     </ContentHeader>
 
-    <div class="flex-1 overflow-y-auto p-4 space-y-4" ref="messageList">
-      <div 
-        v-for="message in messages" 
+    <div class="flex-1 p-4 overflow-y-auto space-y-4" ref="messageList">
+      <div
+        v-for="message in messages"
         :key="message.id"
-        class="max-w-[80%]"
-        :class="message.role === 'user' ? 'self-end' : ''"
+        class="chat"
+        :class="message.role === 'assistant' ? 'chat-receiver' : 'chat-sender'"
       >
-        <div 
-          class="px-4 py-3 rounded-2xl text-sm leading-relaxed"
-          :class="message.role === 'user' ? 'bg-primary text-primary-content' : 'bg-base-200'"
-        >
-          {{ message.content }}
+        <div class="chat-avatar avatar">
+          <div class="size-10 rounded-full">
+            <img 
+              :src="message.role === 'assistant' 
+                ? 'https://cdn.flyonui.com/fy-assets/avatar/avatar-1.png' 
+                : 'https://cdn.flyonui.com/fy-assets/avatar/avatar-2.png'" 
+              alt="avatar" 
+            />
+          </div>
         </div>
-        <div class="flex items-center gap-2 px-2 mt-1">
-          <span class="text-xs opacity-70">{{ message.time }}</span>
-          <button 
-            v-if="message.role === 'assistant'"
-            class="btn btn-ghost btn-xs"
-            @click="copyToClipboard(message.content)"
-          >
-            复制
-          </button>
+        <div class="chat-header text-base-content/90">
+          {{ message.role === 'assistant' ? 'AI 助手' : '我' }}
+          <time class="text-base-content/50">{{ message.time }}</time>
+        </div>
+        <div class="chat-bubble">{{ message.content }}</div>
+        <div class="chat-footer text-base-content/50">
+          <div class="flex items-center gap-1">
+            {{ message.role === 'assistant' ? 'AI 生成' : '已发送' }}
+            <span v-if="message.role === 'user'" class="icon-[tabler--checks] text-success align-bottom"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -72,17 +79,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMenuStore } from '../../stores/menu'
+import type { Message } from '../../types/chat'
 import ContentHeader from '../shared/ContentHeader.vue'
-
-interface Message {
-  id: string
-  role: 'user' | 'assistant'
-  content: string
-  time: string
-}
 
 const menuStore = useMenuStore()
 const { currentItem: currentChat } = storeToRefs(menuStore)
@@ -128,32 +129,16 @@ const handleSend = async () => {
   // TODO: 发送消息到服务器并处理响应
 }
 
-const handleRename = () => {
-  // TODO: 实现重命名功能
-}
-
-const handleDelete = () => {
-  // TODO: 实现删除功能
-}
-
-const copyToClipboard = (text: string) => {
-  navigator.clipboard.writeText(text)
-  // TODO: 显示复制成功提示
-}
-
-const autoResize = () => {
-  const element = textarea.value
-  if (!element) return
-
-  element.style.height = 'auto'
-  element.style.height = `${element.scrollHeight}px`
+const autoResize = (event: Event) => {
+  const target = event.target as HTMLTextAreaElement
+  target.style.height = 'auto'
+  target.style.height = target.scrollHeight + 'px'
 }
 
 const scrollToBottom = () => {
-  const element = messageList.value
-  if (!element) return
-
-  element.scrollTop = element.scrollHeight
+  if (messageList.value) {
+    messageList.value.scrollTop = messageList.value.scrollHeight
+  }
 }
 
 onMounted(() => {

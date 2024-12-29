@@ -1,8 +1,8 @@
 <template>
-  <div class="setting-item">
-    <div class="setting-label">
-      <label :for="item.key">{{ item.label }}</label>
-      <span class="setting-desc">{{ item.description }}</span>
+  <div class="mb-4 p-2 rounded-md transition-colors hover:bg-base-200">
+    <div class="mb-2">
+      <label :for="item.key" class="text-base font-medium text-base-content">{{ item.label }}</label>
+      <span class="block text-sm text-base-content/70 mt-1 leading-relaxed">{{ item.description }}</span>
     </div>
     
     <TextInput
@@ -52,35 +52,4 @@ const emit = defineEmits<{
 const handleUpdate = (key: string, value: any) => {
   emit('update', key, value)
 }
-</script>
-
-<style scoped>
-.setting-item {
-  margin-bottom: var(--spacing-4);
-  padding: var(--spacing-2);
-  border-radius: var(--radius-md);
-  transition: background-color var(--transition-normal) var(--transition-timing);
-}
-
-.setting-item:hover {
-  background-color: var(--color-background-alt);
-}
-
-.setting-label {
-  margin-bottom: var(--spacing-2);
-}
-
-.setting-label label {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text);
-}
-
-.setting-desc {
-  display: block;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-light);
-  margin-top: var(--spacing-1);
-  line-height: 1.4;
-}
-</style> 
+</script> 

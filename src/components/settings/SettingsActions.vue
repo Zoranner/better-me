@@ -1,15 +1,15 @@
 <template>
-  <div class="settings-actions">
-    <button class="action-btn import-btn" @click="handleImport">
-      <i class="action-icon">📥</i>
+  <div class="flex gap-4 p-4 border-t bg-base-200">
+    <button class="btn btn-primary gap-2" @click="handleImport">
+      <span class="text-lg">📥</span>
       导入设置
     </button>
-    <button class="action-btn export-btn" @click="handleExport">
-      <i class="action-icon">📤</i>
+    <button class="btn btn-secondary gap-2" @click="handleExport">
+      <span class="text-lg">📤</span>
       导出设置
     </button>
-    <button class="action-btn reset-btn" @click="handleReset">
-      <i class="action-icon">🔄</i>
+    <button class="btn btn-error gap-2 ml-auto" @click="handleReset">
+      <span class="text-lg">🔄</span>
       重置设置
     </button>
     
@@ -17,7 +17,7 @@
       ref="fileInput"
       type="file"
       accept=".json"
-      style="display: none"
+      class="hidden"
       @change="onFileSelected"
     >
   </div>
@@ -84,67 +84,4 @@ const onFileSelected = async (event: Event) => {
     input.value = ''
   }
 }
-</script>
-
-<style scoped>
-.settings-actions {
-  display: flex;
-  gap: var(--spacing-4);
-  padding: var(--spacing-4);
-  border-top: 1px solid var(--color-border);
-  background-color: var(--color-background-alt);
-}
-
-.action-btn {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-2);
-  padding: var(--spacing-2) var(--spacing-4);
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  transition: all var(--transition-normal) var(--transition-timing);
-  background-color: var(--color-secondary);
-  color: var(--color-background);
-}
-
-.action-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
-}
-
-.action-icon {
-  font-size: var(--font-size-lg);
-}
-
-.import-btn {
-  background-color: var(--color-primary);
-  color: var(--color-background);
-}
-
-.import-btn:hover {
-  background-color: var(--color-primary-dark);
-}
-
-.export-btn {
-  background-color: var(--color-secondary);
-  color: var(--color-background);
-}
-
-.export-btn:hover {
-  background-color: var(--color-secondary-dark);
-}
-
-.reset-btn {
-  margin-left: auto;
-  background-color: var(--color-error);
-  color: var(--color-background);
-}
-
-.reset-btn:hover {
-  background-color: var(--color-error);
-  opacity: 0.9;
-}
-</style> 
+</script> 

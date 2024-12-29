@@ -1,21 +1,20 @@
 <template>
-  <div class="setting-input">
-    <div class="color-input">
-      <input
-        :id="item.key"
-        type="color"
-        :value="item.value"
-        @change="handleChange"
-      >
-      <input
-        type="text"
-        :value="item.value"
-        @change="handleTextChange"
-        class="color-text"
-        pattern="^#[0-9A-Fa-f]{6}$"
-        maxlength="7"
-      >
-    </div>
+  <div class="flex items-center gap-2">
+    <input
+      :id="item.key"
+      type="color"
+      :value="item.value"
+      @change="handleChange"
+      class="w-11 h-6 p-0 border border-base-300 rounded-md cursor-pointer bg-transparent hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50"
+    >
+    <input
+      type="text"
+      :value="item.value"
+      @change="handleTextChange"
+      class="input input-bordered flex-1 font-mono text-sm uppercase"
+      pattern="^#[0-9A-Fa-f]{6}$"
+      maxlength="7"
+    >
   </div>
 </template>
 
@@ -47,66 +46,4 @@ const handleTextChange = (event: Event) => {
     target.value = props.item.value
   }
 }
-</script>
-
-<style scoped>
-.color-input {
-  display: flex;
-  gap: var(--spacing-2);
-  align-items: center;
-}
-
-input[type="color"] {
-  width: 44px;
-  height: 24px;
-  padding: 0;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  background: none;
-  transition: all var(--transition-fast) var(--transition-timing);
-}
-
-input[type="color"]:hover {
-  border-color: var(--color-border-dark);
-  transform: scale(1.05);
-}
-
-input[type="color"]:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px var(--color-primary-light);
-}
-
-input[type="color"]::-webkit-color-swatch-wrapper {
-  padding: 0;
-}
-
-input[type="color"]::-webkit-color-swatch {
-  border: none;
-  border-radius: calc(var(--radius-sm) - 1px);
-}
-
-.color-text {
-  flex: 1;
-  padding: var(--spacing-1) var(--spacing-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background-color: var(--color-background);
-  color: var(--color-text);
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-sm);
-  text-transform: uppercase;
-  transition: all var(--transition-fast) var(--transition-timing);
-}
-
-.color-text:hover {
-  border-color: var(--color-border-dark);
-}
-
-.color-text:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px var(--color-primary-light);
-}
-</style> 
+</script> 
