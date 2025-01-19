@@ -34,17 +34,23 @@
           </div>
         </div>
 
-        <div class="flex-1 p-6 overflow-y-auto">
-          <div class="space-y-6">
-            <SettingItem
-              v-for="item in currentCategorySettings"
-              :key="item.key"
-              :item="item"
-              @update="updateSetting"
-            />
+        <div class="flex-1 flex flex-col">
+          <div class="flex-1 p-6 overflow-y-auto">
+            <div class="space-y-6">
+              <SettingItem
+                v-for="item in currentCategorySettings"
+                :key="item.key"
+                :item="item"
+                @update="updateSetting"
+              />
+            </div>
           </div>
 
-          <SettingsActions />
+          <div class="p-4 border-t bg-base-200 flex justify-end gap-3">
+            <button class="btn" @click="$emit('close')">取消</button>
+            <button class="btn btn-primary" @click="handleApply">应用</button>
+            <button class="btn btn-primary" @click="handleSave">保存</button>
+          </div>
         </div>
       </div>
     </div>
@@ -57,7 +63,6 @@
   import { useSettingsStore } from '../../stores/modules/settings';
   import type { SettingCategory } from '../../types/settings';
   import SettingItem from './SettingItem.vue';
-  import SettingsActions from './SettingsActions.vue';
 
   const settingsStore = useSettingsStore();
   const { activeCategory, currentCategorySettings } = storeToRefs(settingsStore);
@@ -90,5 +95,18 @@
     }
   });
 
-  defineEmits(['close']);
+  const emit = defineEmits<{
+    (e: 'close'): void
+  }>()
+
+  const handleApply = () => {
+    // 应用设置但不关闭窗口
+    settingsStore.saveSettings()
+  }
+
+  const handleSave = () => {
+    // 保存设置并关闭窗口
+    settingsStore.saveSettings()
+    emit('close')
+  }
 </script>
