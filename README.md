@@ -1,79 +1,50 @@
-# electron-vite-vue
+# BetterMe - 你的超级个体助手
 
-🥳 Really simple `Electron` + `Vue` + `Vite` boilerplate.
+BetterMe 是一款旨在赋能个人成为超级个体的智能助手软件。通过整合先进的大语言模型技术，我们致力于帮助每个人都能够突破个人生产力的限制，实现"个人有限公司"的理念。
 
-<!-- [![awesome-vite](https://awesome.re/mentioned-badge.svg)](https://github.com/vitejs/awesome-vite) -->
-<!-- [![Netlify Status](https://api.netlify.com/api/v1/badges/ae3863e3-1aec-4eb1-8f9f-1890af56929d/deploy-status)](https://app.netlify.com/sites/electron-vite/deploys) -->
-<!-- [![GitHub license](https://img.shields.io/github/license/caoxiemeihao/electron-vite-vue)](https://github.com/electron-vite/electron-vite-vue/blob/main/LICENSE) -->
-<!-- [![GitHub stars](https://img.shields.io/github/stars/caoxiemeihao/electron-vite-vue?color=fa6470)](https://github.com/electron-vite/electron-vite-vue) -->
-<!-- [![GitHub forks](https://img.shields.io/github/forks/caoxiemeihao/electron-vite-vue)](https://github.com/electron-vite/electron-vite-vue) -->
-[![GitHub Build](https://github.com/electron-vite/electron-vite-vue/actions/workflows/build.yml/badge.svg)](https://github.com/electron-vite/electron-vite-vue/actions/workflows/build.yml)
-[![GitHub Discord](https://img.shields.io/badge/chat-discord-blue?logo=discord)](https://discord.gg/sRqjYpEAUK)
+## 🌟 愿景
 
-## Features
+在 AI 时代，我们相信每个人都应该拥有成为"超级个体"的机会。BetterMe 将帮助你：
 
-📦 Out of the box  
-🎯 Based on the official [template-vue-ts](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-vue-ts), less invasive  
-🌱 Extensible, really simple directory structure  
-💪 Support using Node.js API in Electron-Renderer  
-🔩 Support C/C++ native addons  
-🖥 It's easy to implement multiple windows  
+- 🚀 突破个人生产力边界
+- 💡 实现创意快速落地
+- 🔄 高效管理多个角色
+- 🎯 专注于真正重要的决策
 
-## Quick Setup
+## ✨ 核心特性
 
-```sh
-# clone the project
-git clone https://github.com/electron-vite/electron-vite-vue.git
+- **智能代理系统**：配置和管理多个 AI 助手，处理不同领域的任务
+- **个性化设置**：根据个人需求自定义 AI 助手的行为和专长
+- **多模态交互**：支持文本、图像等多种交互方式
+- **工具集成**：强大的工具系统，让 AI 助手能够执行实际操作
 
-# enter the project directory
-cd electron-vite-vue
+## 🛠️ 技术栈
 
-# install dependency
+- 前端框架：Vue 3 + TypeScript
+- 桌面端：Electron
+- 构建工具：Vite
+- UI 框架：现代化的响应式设计
+
+## 🚀 快速开始
+
+```bash
+# 克隆项目
+git clone https://github.com/yourusername/better-me.git
+
+# 进入项目目录
+cd better-me
+
+# 安装依赖
 npm install
 
-# develop
+# 启动开发服务器
 npm run dev
 ```
 
-## Debug
+## 🤝 参与贡献
 
-![electron-vite-react-debug.gif](https://github.com/electron-vite/electron-vite-react/blob/main/electron-vite-react-debug.gif?raw=true)
+我们欢迎任何形式的贡献，无论是新功能、bug 修复，还是文档改进。请随时提交 Pull Request 或创建 Issue。
 
-## Directory
+## 📜 开源协议
 
-```diff
-+ ├─┬ electron
-+ │ ├─┬ main
-+ │ │ └── index.ts    entry of Electron-Main
-+ │ └─┬ preload
-+ │   └── index.ts    entry of Preload-Scripts
-  ├─┬ src
-  │ └── main.ts       entry of Electron-Renderer
-  ├── index.html
-  ├── package.json
-  └── vite.config.ts
-```
-
-<!--
-## Be aware
-
-🚨 By default, this template integrates Node.js in the Renderer process. If you don't need it, you just remove the option below. [Because it will modify the default config of Vite](https://github.com/electron-vite/vite-plugin-electron-renderer#config-presets-opinionated).
-
-```diff
-# vite.config.ts
-
-export default {
-  plugins: [
--   // Use Node.js API in the Renderer-process
--   renderer({
--     nodeIntegration: true,
--   }),
-  ],
-}
-```
--->
-
-## FAQ
-
-- [C/C++ addons, Node.js modules - Pre-Bundling](https://github.com/electron-vite/vite-plugin-electron-renderer#dependency-pre-bundling)
-- [dependencies vs devDependencies](https://github.com/electron-vite/vite-plugin-electron-renderer#dependencies-vs-devdependencies)
+[MIT License](LICENSE)

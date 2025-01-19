@@ -1,8 +1,8 @@
 {
-  "name": "better-llm",
-  "version": "0.0.1",
+  "name": "better-me",
+  "version": "0.0.0",
   "main": "dist-electron/main/index.js",
-  "description": "A better LLM tool",
+  "description": "BetterMe - Your Super Individual Assistant",
   "author": "Zoranner",
   "license": "MIT",
   "private": true,
